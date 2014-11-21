@@ -6,7 +6,7 @@
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/21 15:14:20 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/21 16:10:31 by spochez          ###   ########.fr       */
+/*   Updated: 2014/11/21 16:14:14 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ int		ft_refresh(char **line, char **split)
 		*line = NULL;
 		free (*line);
 	}
-	*line = (char *)malloc(sizeof(char) * (ft_strlen(split[j]) + 1));
 	*line = ft_strdup(split[j]);
 	if (split[j + 1])
+	{
+		j++;
 		return (1);
-	j++;
+	}
 	return (0);
 }
 
