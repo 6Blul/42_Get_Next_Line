@@ -6,7 +6,7 @@
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 14:32:56 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/26 04:15:49 by spochez          ###   ########.fr       */
+/*   Updated: 2014/11/26 20:33:51 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,66 +15,84 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		ft_rchr(char *s, char c)
+int		ft_rchr(char *res, int i, char c)
 {
-	size_t		i;
+	static int	j;
+	int			len;
 
-	i = 0;
-	while (s[i])
+	i = j;
+	len = ft_strlen(res);
+	if (res)
 	{
-		if (s[i] == c)
-			return (i);
-		i++;
+		while (i < len)
+		{
+			if (res[i] == c)
+			{
+				j = i;
+				while (res[j] == c)
+					j++;
+				return (i);
+			}
+			i++;
+		}
 	}
-	return (ft_strlen(s) + 1);
+	return (i);
 }
 
-int		ft_getbf(char *buff, int rd, char **line)
+void	ft_send(char **line, char *res)
+{
+	static int	i;
+	static int	j;
+
+	if (i != 0)
+		j = i;
+	i = ft_rchr(res, i, '\n');
+	if ((size_t)i == ft_strlen(res) && j != 0)
+		*line = ft_strdup(res);
+	else
+	{
+		*line = ft_strsub(res, 0, i);
+		res = ft_strsub(res, i, ft_strlen(res) - i);
+	}
+}
+
+char	*ft_getbf(char *buff, int rd)
 {
 	static char	*res;
-	char		*tp;
-	size_t		i;
 
-	//ft_putendl(buff);
-	if (!buff || rd == 0)
-		return (0);
+	if (rd == 0)
+		return (res);
 	if (!res)
 		res = ft_strdup(buff);
 	else
 		res = ft_strjoin(res, buff);
-	tp = ft_strdup(res);
-	//ft_putendl(res);
-	//ft_putstr("Next->");
-	i = ft_rchr(tp, '\n');
-	if (i != ft_strlen(res) + 1)
-	{
-		*line = ft_strndup(res, i);
-		tp = ft_strdnup(res, i);
-		//ft_putstr(res);
-	}
-	if (!*line)
-		return (-1);
-	if (rd == 0)
-		return (0);
-	return (1);
+	return (res);
 }
 
 int		get_next_line(int const fd, char **line)
 {
 	char		*buff;
+	static char	*res;
 	int			rd;
-	int			r;
+	static int	ifrd;
 
 	rd = 1;
 	buff = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
 	if (!buff)
 		return (-1);
-	while (rd != 0)
+	if (ifrd == 0)
 	{
-		rd = read(fd, buff, BUFF_SIZE);
-		r = ft_getbf(buff, rd, line);
-		if (rd == -1)
-			return (-1);
+		while (rd != 0)
+		{
+			rd = read(fd, buff, BUFF_SIZE);
+			res = ft_getbf(buff, rd);
+			if (rd == -1)
+				return (-1);
+		}
 	}
-	return (r);
+	ifrd = 1;
+	ft_send(&(*line), res);
+	if (!line || !res)
+		return (-1);
+	return (1);
 }
