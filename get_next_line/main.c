@@ -6,7 +6,7 @@
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/18 18:36:37 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/18 22:54:03 by spochez          ###   ########.fr       */
+/*   Updated: 2014/11/29 01:04:56 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ int		main(void)
 	char	*line;
 
 	line = NULL;
-	fd = open("lenomdetonfichiersalope.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
+	fd = open("fichiertest", O_RDONLY);
+	while (get_next_line(fd, &line) == 1)
+	{
+		printf("%s\n", line);
+		free(line);
+		line = NULL;
+	}
 	return (0);
 }
