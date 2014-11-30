@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/18 18:36:37 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/30 06:02:16 by spochez          ###   ########.fr       */
+/*   Created: 2014/11/30 06:37:07 by spochez           #+#    #+#             */
+/*   Updated: 2014/11/30 06:42:02 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,23 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+// teste la valeur de retour de gnl en cas d'erreur (test pour fd unavailable)
 int		main(int ac, char **av)
 {
 	int		fd;
 	char	*line;
-	//int		gnl;
+	int		gnl;
 
-	//gnl = 1;
+	gnl = 1;
 	line = NULL;
-	//(void)ac;
-	//(void)av;
-	if (ac > 1)
-		fd = open(av[1], O_RDONLY);
-	else
-		fd = 0;
-	/*while (gnl > 0)
+	(void)ac;
+	(void)av;
+	fd = 40;
+	while (gnl > 0)
 	{
 		gnl = get_next_line(fd, &line);
 		printf("%s\n", line);
-		printf ("%i\n", gnl);
-	}*/
-	while (get_next_line(fd, &line) > 0)
-		printf("%s\n", line);
+		printf("%i\n", gnl);
+	}
 	return (0);
 }
