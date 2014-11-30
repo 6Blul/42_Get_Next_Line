@@ -6,7 +6,7 @@
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/26 23:14:30 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/29 03:34:09 by spochez          ###   ########.fr       */
+/*   Updated: 2014/11/30 03:21:29 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,10 @@ char	*ft_putline(char **buff, char **line)
 	else
 		*line = ft_strjoin((char *)*line, *buff);
 	if (pos && pos[1])
-		*buff = ft_strdup(pos + 1);
-	if (pos && !pos[1])
+		*buff = ft_strcpy(*buff, pos + 1);
+	else if ((pos && !pos[1]) || !pos)
 		ft_bzero((void *)*buff, ft_strlen(*buff));
-	if (pos)
-		return (pos);
-	else
-		return (NULL);
+	return (pos);
 }
 
 int		ft_read(int const fd, char **buff, char **line)
@@ -46,32 +43,34 @@ int		ft_read(int const fd, char **buff, char **line)
 	while (rd != 0)
 	{
 		rd = read(fd, *buff, BUFF_SIZE);
-		if (rd == -1)
+		if (rd < 0)
 			return (-1);
-		pos = ft_putline(&(*buff), &(*line));
+		if (rd == 0)
+			return (0);
+		(*buff)[rd] = 0;
+		pos = ft_putline(buff, &(*line));
 		if (pos)
 			return (1);
 	}
-	return (rd);
+	return (0);
 }
 
 int		get_next_line(int const fd, char **line)
 {
 	static char	*buff;
 	int			rd;
-	char		*pos;
 	char		*ret;
 
+	*line = NULL;
 	rd = 0;
-	if (BUFF_SIZE <= 0)
+	if (BUFF_SIZE <= 0 || fd < 0)
 		return (-1);
 	if (!buff)
 	{
 		buff = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
 		buff[0] = 0;
 	}
-	pos = ft_strchr(buff, '\n');
-	if (pos || (buff[0]))
+	if (ft_strchr((buff), '\n') || buff[0])
 	{
 		ret = ft_putline(&buff, &(*line));
 		if (ret)
@@ -79,5 +78,7 @@ int		get_next_line(int const fd, char **line)
 	}
 	if (rd == 0)
 		rd = ft_read(fd, &buff, &(*line));
+	if (*line)
+		rd = 1;
 	return (rd);
 }

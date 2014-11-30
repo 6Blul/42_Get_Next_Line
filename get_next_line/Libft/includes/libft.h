@@ -6,7 +6,7 @@
 /*   By: spochez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/05 10:58:56 by spochez           #+#    #+#             */
-/*   Updated: 2014/11/15 12:22:21 by spochez          ###   ########.fr       */
+/*   Updated: 2014/11/26 03:23:19 by spochez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_putstr_fd(char const *s, int fd);
 void	ft_striter(char *s, void (*f)(char *));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strndup(const char *s1, size_t n);
+char	*ft_strdnup(const char *src, size_t n);
 size_t	ft_strnlen(const char *s, size_t id);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s);

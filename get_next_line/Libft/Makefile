@@ -6,7 +6,7 @@
 #    By: spochez <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 17:47:13 by spochez           #+#    #+#              #
-#    Updated: 2014/11/13 17:12:03 by spochez          ###   ########.fr        #
+#    Updated: 2014/11/26 03:30:26 by spochez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC =	$(F)ft_atoi.c		\
 		$(F)ft_strncmp.c	\
 		$(F)ft_strcpy.c		\
 		$(F)ft_strncpy.c	\
+		$(F)ft_strdnup.c	\
 		$(F)ft_strdup.c		\
 		$(F)ft_strdel.c		\
 		$(F)ft_strequ.c		\
@@ -103,6 +104,7 @@ OBJ =	ft_atoi.o		\
 		ft_strncmp.o	\
 		ft_strcpy.o		\
 		ft_strncpy.o	\
+		ft_strdnup.o	\
 		ft_strdup.o		\
 		ft_strdel.o		\
 		ft_strequ.o		\
